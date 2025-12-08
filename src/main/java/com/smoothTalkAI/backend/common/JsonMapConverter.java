@@ -1,0 +1,38 @@
+package com.smoothTalkAI.backend.common;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
+import java.util.Map;
+
+@Converter
+public class JsonMapConverter implements AttributeConverter<Map<String, Integer>, String> {
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Override
+    public String convertToDatabaseColumn(Map<String, Integer> attribute) {
+        if (attribute == null || attribute.isEmpty()) {
+            return null;
+        }
+        try {
+            return objectMapper.writeValueAsString(attribute);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to convert map to JSON", e);
+        }
+    }
+
+    @Override
+    public Map<String, Integer> convertToEntityAttribute(String dbData) {
+        if (dbData == null || dbData.isBlank()) {
+            return null;
+        }
+        try {
+            return objectMapper.readValue(dbData, new TypeReference<Map<String, Integer>>() {});
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to convert JSON to map", e);
+        }
+    }
+}

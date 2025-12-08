@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:latest
+    container_name: smoothtalkai-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: smoothtalkai
+      POSTGRES_USER: smoothtalkai
+      POSTGRES_PASSWORD: smoothtalkai123!
+    volumes:
+      - db-data:/var/lib/postgresql/18/docker
+
+  redis:
+    image: redis:7-alpine
+    container_name: smoothtalkai-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+
+volumes:
+  db-data:
+  redis-data:
