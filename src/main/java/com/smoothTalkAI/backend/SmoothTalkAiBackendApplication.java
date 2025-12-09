@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class SmoothTalkAiBackendApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(SmoothTalkAiBackendApplication.class, args);
 	}
 
