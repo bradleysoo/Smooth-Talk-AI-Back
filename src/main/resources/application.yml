@@ -41,6 +41,7 @@ logging:
 jwt:
   secret: ${JWT_SECRET:this_is_a_dev_jwt_secret_key_that_is_long_enough_123456}
   access-token-validity-in-sec: 604800
+  
 
 redis:
   host: localhost
